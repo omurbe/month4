@@ -5,6 +5,9 @@
     <title>Детали блога</title>
 </head>
 <body>
+<button><a href="/blog/{{post.id}}/update">Edit</a></button>
+<button><a href="/blog/{{post.id}}/delete">Delete</a></button>
+
     <h1>{{ post.title }}</h1>
     <p>{{ post.created_at }}</p>
     {% if post.image %}

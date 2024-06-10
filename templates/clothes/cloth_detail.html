@@ -2,10 +2,17 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <h1>{{cloth_id.name}}</h1>
-    <p>{{cloth_id.price}}</p>
+    <title>Cloth Detail</title>
 </head>
 <body>
+    <h1>{{ cloth.name }}</h1>
+    <p>Price: {{ cloth.price }}</p>
 
-</body>
-</html>
+    <h2>Отзывы: </h2>
+    {% for review in cloth.reviews.all %}
+        <p>{{ review.text }}</p>
+        <p>{{ review.stars }}</p>
+        <p>{{ review.created_at }}</p>
+    {%
+    {% endfor %}
+

@@ -17,3 +17,15 @@ class Cloth(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Review(models.Model):
+    cloth = models.ForeignKey(Cloth,
+                             related_name='reviews',
+                             on_delete=models.CASCADE)
+    stars = models.IntegerField()
+    text = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Review for {self.cloth.name}"
