@@ -7,16 +7,15 @@ from .forms import BlogForm
 from .models import BlogModels
 
 
-def BlogModels_view(request):
-    if request.method == 'GET':
-        posts = BlogModels.objects.all()
-        return render(request, template_name='blog.html', context={'posts': posts})
+class BlogListView(generic.ListView):
+    template_name = 'blog.html'
+    context_object_name = 'posts'
+    model = BlogModels
 
-
-def Blog_vews_detail_view(request, id):
-    if request.method == 'GET':
-        post = get_object_or_404(BlogModels, id=id)
-        return render(request, template_name='blog_detail.html', context={'post': post})
+class BlogDetailView(generic.ListView):
+    template_name = 'blog_detail.html'
+    context_object_name = 'post'
+    model = BlogModels
 
 
 class BlogChangesView(generic.UpdateView):
@@ -50,22 +49,15 @@ class BlogAdd(generic.CreateView):
         return super(BlogAdd, self).form_valid(form=form)
 
 
+class SearchBlogView(generic.ListView):
+    template_name = 'blog.html'
+    context_object_name = 'blogs'
+    paginate_by = 5
 
+    def get_queryset(self):
+        return BlogModels.objects.filter(name__icontains=self.request.GET.get('q'))
 
-
-def personal_view(request):
-    if request.method == 'GET':
-        name = "Омурбек"
-        surname = "Абдираслов"
-        age = "17"
-        return HttpResponse(f"Omurbek: {name}<br>Abdirasulov: {surname}<br>17: {age}")
-
-def hobby_view(request):
-    if request.method == 'GET':
-        hobby = "Volleyball"
-        return HttpResponse(f"Валейбол: {hobby}")
-
-def time_view(request):
-    if request.method == 'GET':
-        now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        return HttpResponse(f"Текущее время: {now}")
+    def get_context_data(self, *, object_list=None, **kwargs):
+        contex = super().get_context_data(**kwargs)
+        contex['q'] = self.request.GET.get('q')
+        return contex
