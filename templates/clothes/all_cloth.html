@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    {% for i in all_cloth %}
+    <h1>{{ i.name }}</h1>
+    <h1>{{i.price}}</h1>
+    <button><a href="{% url 'cloth_detail' i.id%}">Подробнее</a></button>
+    {% endfor %}
+</head>
+<body>
+
+</body>
+</html>

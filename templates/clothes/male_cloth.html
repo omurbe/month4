@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% for cloth in male_cloth %}
+    <h1>{{ cloth.name }}</h1>
+    <p>Price: {{ cloth.price }}</p>
+    <p>Tags:
+        {% for tag in cloth.tags.all %}
+            {{ tag.name }}
+        {% endfor %}
+    </p>
+{% endfor %}
+</head>
+<body>
+
+</body>
+</html>
